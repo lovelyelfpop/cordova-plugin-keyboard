@@ -1,10 +1,11 @@
 # cordova-plugin-keyboard
 
-> This plugin provides the `Keyboard` object which has some functions to customize and control the keyboard. It also supports the __HideKeyboardFormAccessoryBar__ (boolean) and __KeyboardShrinksView__ (boolean) preferences in config.xml.
+Since [ionic-plugin-keyboard](https://github.com/driftyco/ionic-plugin-keyboard) doesn't provide `keyboardDidShow` and `keyboardDidHide` events for android, and [cordova-plugin-keyboard](https://github.com/cjpearson/cordova-plugin-keyboard) doesn't support __KeyboardShrinksView__ preference for ios, I combined these two plugins and make this new plugin.
 
-This plugin has only been tested in Cordova 3.2 or greater, and its use in previous Cordova versions is not recommended (potential conflict with keyboard customization code present in the core in previous Cordova versions). 
 
-If you do use this plugin in an older Cordova version (again, not recommended), you have to make sure the HideKeyboardFormAccessoryBar and KeyboardShrinksView preference values are *always* false, and only use the API functions to turn things on/off.
+> This plugin provides the `Keyboard` object which has some functions to customize and control the keyboard. It also supports the __HideKeyboardFormAccessoryBar__ (boolean) and __KeyboardShrinksView__ (boolean) preferences for ios in config.xml.
+
+
 
 This plugin was based on this Apache [project](https://github.com/apache/cordova-plugins/tree/master/keyboard) and has a compatible API.
 
@@ -28,13 +29,9 @@ This plugin was based on this Apache [project](https://github.com/apache/cordova
 
 # Installation
 
-From [npm](https://www.npmjs.com/package/cordova-plugin-keyboard) (stable)
-
-`cordova plugin add cordova-plugin-keyboard`
-
 From github latest (may not be stable)
 
-`cordova plugin add https://github.com/cjpearson/cordova-plugin-keyboard`
+`cordova plugin add https://github.com/lovelyelfpop/cordova-plugin-keyboard`
 
 # Methods
 
@@ -128,6 +125,10 @@ Show the keyboard
 
 Call this method to show the keyboard.
 
+This method only support android. 
+
+For ios, if you want the keyboard to appear when calling `focus()` on form inputs, you should set `KeyboardDisplayRequiresUserAction` to `false` on `config.xml`.
+
 
 #### Supported Platforms
 
@@ -155,6 +156,7 @@ Read this property to determine if the keyboard is visible.
 #### Supported Platforms
 
 - iOS
+- Android
 
 ## Keyboard.automaticScrollToTopOnHiding
 
@@ -180,8 +182,15 @@ after keyboard is hiding.
 
 This event is fired when keyboard fully shown.
 
+	//for ios
     window.addEventListener('keyboardDidShow', function () {
         // Describe your logic which will be run each time keyboard is shown.
+    });
+
+	//for android
+    window.addEventListener('keyboardDidShow', function (event) {
+        // Describe your logic which will be run each time keyboard is shown.
+		console.log(event.keyboardHeight);
     });
 
 #### Description
@@ -192,6 +201,7 @@ Attach handler to this event to be able to receive notification when keyboard is
 #### Supported Platforms
 
 - iOS
+- Android
 
 ## keyboardDidHide
 
@@ -209,6 +219,7 @@ Attach handler to this event to be able to receive notification when keyboard is
 #### Supported Platforms
 
 - iOS
+- Android
 
 ## keyboardWillShow
 
@@ -261,30 +272,3 @@ Attach handler to this event to be able to receive notification when keyboard is
 #### Supported Platforms
 
 - iOS
-
-
-# Releases
-
-- 1.0.0 
- - Initial NPM release
- - Fix issues with external keyboards
- - Support keyboard events on window
- - Fix issues with split and undocked keyboards
- - Add keyboardHeightWillChange event
- - Fix issues with StatusBarOverlaysWebview
-- 1.1.0
- - Add hide/show for Android
- - Support original keyboard event mechanism
-- 1.1.1
- - Make compatible with cordova-android 3 and 4 (See [#2](/../../issues/2))
- - Add hide for iOS
-- 1.1.2
- - Fix issues with hiding the accessory bar (See [#3](/../../issues/3))
-- 1.1.3
- - Support hiding the accessory bar when using WKWebView as the engine (See [here](https://github.com/Telerik-Verified-Plugins/WKWebView/issues/85))
-- 1.1.4
- - Fix page scrolling (See [#14](/../../issues/14))
- - Prevent possible app store rejections (See [#21](/../../issues/21)) 
-- 1.1.5
- - Fix window.innerHeight when using WKWebView (See [#32](/../../issues/32))
-

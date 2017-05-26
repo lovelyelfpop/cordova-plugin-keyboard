@@ -17,14 +17,13 @@
  * specific language governing permissions and limitations
  * under the License.
  *
-*/
+ */
 
 var argscheck = require('cordova/argscheck'),
     utils = require('cordova/utils'),
     exec = require('cordova/exec');
-   
-var Keyboard = function() {
-};
+
+var Keyboard = function() {};
 
 Keyboard.shrinkView = function(shrink) {
     exec(null, null, "Keyboard", "shrinkView", [shrink]);
@@ -42,8 +41,8 @@ Keyboard.fireOnShow = function() {
     Keyboard.isVisible = true;
     cordova.fireWindowEvent('keyboardDidShow');
 
-    if(Keyboard.onshow) {
-	Keyboard.onshow();
+    if (Keyboard.onshow) {
+        Keyboard.onshow();
     }
 };
 
@@ -51,8 +50,8 @@ Keyboard.fireOnHide = function() {
     Keyboard.isVisible = false;
     cordova.fireWindowEvent('keyboardDidHide');
 
-    if(Keyboard.onhide) {
-	Keyboard.onhide();
+    if (Keyboard.onhide) {
+        Keyboard.onhide();
     }
 };
 
@@ -67,16 +66,16 @@ Keyboard.fireOnHiding = function() {
 
     cordova.fireWindowEvent('keyboardWillHide');
 
-    if(Keyboard.onhiding) {
-	Keyboard.onhiding();
+    if (Keyboard.onhiding) {
+        Keyboard.onhiding();
     }
 };
 
 Keyboard.fireOnShowing = function() {
     cordova.fireWindowEvent('keyboardWillShow');
 
-    if(Keyboard.onshowing) {
-	Keyboard.onshowing();
+    if (Keyboard.onshowing) {
+        Keyboard.onshowing();
     }
 };
 
